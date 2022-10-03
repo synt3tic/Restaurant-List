@@ -2,17 +2,9 @@
   <div class="page">
     <div class="main">
       <img
-        v-if="leftLampActive"
-        @click="leftLampStatus"
         class="main__lamp"
-        src="../images/lamp__on.png"
-        alt="lamp"
-      />
-      <img
-        v-else
-        @click="leftLampStatus"
-        class="main__lamp"
-        src="../images/lamp__off.png"
+        @click="changeLeftLampStatus"
+        :src="leftLampSource"
         alt="lamp"
       />
       <div class="main__text">
@@ -27,17 +19,9 @@
         </p>
       </div>
       <img
-        v-if="rightLampActive"
-        @click="rightLampStatus"
         class="main__lamp"
-        src="../images/lamp__on.png"
-        alt="lamp"
-      />
-      <img
-        v-else
-        @click="rightLampStatus"
-        class="main__lamp"
-        src="../images/lamp__off.png"
+        @click="changeRightLampStatus"
+        :src="rightLampSource"
         alt="lamp"
       />
     </div>
@@ -53,16 +37,30 @@
 export default {
   data() {
     return {
-      leftLampActive: false,
-      rightLampActive: false,
+      leftLampSource: require("../images/lamp__off.png"),
+      rightLampSource: require("../images/lamp__off.png"),
+      isLeftLampActive: false,
+      isRightLampActive: false,
     };
   },
   methods: {
-    leftLampStatus() {
-      this.leftLampActive = !this.leftLampActive;
+    changeLeftLampStatus() {
+      if (!this.isLeftLampActive) {
+        this.leftLampSource = require("../images/lamp__on.png");
+        this.isLeftLampActive = !this.isLeftLampActive;
+      } else {
+        this.leftLampSource = require("../images/lamp__off.png");
+        this.isLeftLampActive = !this.isLeftLampActive;
+      }
     },
-    rightLampStatus() {
-      this.rightLampActive = !this.rightLampActive;
+    changeRightLampStatus() {
+      if (!this.isRightLampActive) {
+        this.rightLampSource = require("../images/lamp__on.png");
+        this.isRightLampActive = !this.isRightLampActive;
+      } else {
+        this.rightLampSource = require("../images/lamp__off.png");
+        this.isRightLampActive = !this.isRightLampActive;
+      }
     },
   },
 };
