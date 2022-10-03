@@ -2,8 +2,8 @@
   <div class="page">
     <header class="header">
       <img src="./images/logo.png" alt="header-logo" />
-      <router-link class="header__links" to="/">Главная</router-link>
-      <router-link class="header__links" to="/about"
+      <router-link class="header__link" to="/">Главная</router-link>
+      <router-link class="header__link" to="/about"
         >Список ресторанов</router-link
       >
     </header>
@@ -15,7 +15,11 @@
 export default {};
 </script>
 
-<style scoped>
+<style>
+body {
+  margin: 0;
+}
+
 .page {
   height: 100vh;
   background: rgb(36, 36, 36);
@@ -31,14 +35,14 @@ export default {};
   padding: 10px;
 }
 
-.header__links {
+.header__link {
   align-self: center;
   text-decoration: none;
   color: white;
   font-size: 20px;
 }
 
-.header__links:hover {
+.header__link:hover {
   color: rgb(219, 53, 53);
 }
 
