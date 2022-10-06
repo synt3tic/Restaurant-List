@@ -1,10 +1,10 @@
 <template>
-  <div class="restaurant-block">
+  <div class="restaurant-list">
     <restaurant-card
       v-for="restaurant in restaurantList"
       :key="restaurant.id"
       :restaurant="restaurant"
-    ></restaurant-card>
+    />
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
           id: 1,
           name: "Кайф Провинанс",
           imageSource: "restaurant",
-          busyPlaces: 20,
+          busyPlaces: 16,
           totalPlaces: 24,
           status: true,
         },
@@ -47,15 +47,13 @@ export default {
 </script>
 
 <style scoped>
-.restaurant-block {
+.restaurant-list {
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  width: 90%;
   color: white;
   gap: 30px;
-  margin: auto;
   margin-top: 30px;
 }
 </style>

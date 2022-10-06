@@ -14,10 +14,8 @@
         alt="restaurant-workload"
       />
     </div>
-    <div class="card__restaurant-status" v-if="this.restaurant.status">
-      Открыт
-    </div>
-    <div class="card__restaurant-status" v-else>Закрыт</div>
+    <div v-if="this.restaurant.status">Открыт</div>
+    <div class="card__restaurant-closed-status" v-else>Закрыт</div>
   </div>
 </template>
 
@@ -32,7 +30,6 @@ export default {
       required: true,
     },
   },
-  methods: {},
   computed: {
     workloadLevel() {
       return (this.restaurant.busyPlaces / this.restaurant.totalPlaces) * 100;
@@ -40,13 +37,13 @@ export default {
 
     workloadLevelIdicate() {
       if (this.workloadLevel < 55) {
-        return require(`../images/${"restaurant__loading_normal"}.png`);
+        return require("../images/restaurant__loading_normal.png");
       }
       if (this.workloadLevel > 55 && this.workloadLevel < 75) {
-        return require(`../images/${"restaurant__loading_middle"}.png`);
+        return require("../images/restaurant__loading_middle.png");
       }
       if (this.workloadLevel >= 75) {
-        return require(`../images/${"restaurant__loading_high"}.png`);
+        return require("../images/restaurant__loading_high.png");
       }
     },
 
@@ -84,14 +81,15 @@ export default {
   align-items: center;
   margin-top: 10px;
   margin-bottom: 5px;
+  gap: 5px;
 }
 
 .card__restaurant-workload-indicator {
   width: 18px;
   height: 18px;
-  margin-left: 10px;
 }
 
-.card__restaurant-status {
+.card__restaurant-closed-status {
+  color: rgb(219, 53, 53);
 }
 </style>

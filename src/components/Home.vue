@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="main-page">
     <div class="main">
       <img
         class="main__lamp"
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style scoped>
-.page {
+.main-page {
   display: flex;
   flex-direction: column;
   width: 100%;
