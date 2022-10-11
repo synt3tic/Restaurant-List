@@ -90,8 +90,8 @@ export default {
     },
 
     deleteRestaurant() {
-      this.$router.push('/about')
       this.$emit('deleteRestaurant', this.restaurant)
+      this.$router.push('/about')
     }
   },
 };
