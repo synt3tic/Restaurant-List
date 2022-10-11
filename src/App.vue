@@ -7,7 +7,7 @@
         >Список ресторанов</router-link
       >
     </header>
-    <router-view :restaurantList="restaurantList" @deleteRestaurant='deleteRes'/>
+    <router-view :restaurantList="restaurantList" @deleteRestaurant='deleteRestaurant'/>
   </div>
 </template>
 
@@ -120,8 +120,8 @@ export default {
     };
   },
   methods: {
-    deleteRes(restaurant){
-      this.restaurantList = this.restaurantList.filter(r => r.id !== restaurant.id)
+    deleteRestaurant(restaurant){
+      this.restaurantList = this.restaurantList.filter(element => element.id !== restaurant.id)
     }
   }
 };
