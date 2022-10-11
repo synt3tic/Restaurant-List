@@ -104,6 +104,6 @@ export default {
 
 .page__restaurant-logo {
   margin-top: 25px;
-  width: 40%;
+  width: 600px;
 }
 </style>

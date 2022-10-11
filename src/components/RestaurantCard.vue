@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div @click="goToRestaurantPage" class="card" to="/about/:id">
     <h3>{{ restaurant.name }}</h3>
     <img class="card__image" :src="restaurantLink" alt="restaurant" />
     <div class="card__restaurant-workload">
@@ -20,7 +20,9 @@
 </template>
 
 <script>
+import RestaurantPage from "./RestaurantPage.vue";
 export default {
+  components: { RestaurantPage },
   data() {
     return {};
   },
@@ -52,10 +54,19 @@ export default {
       return require(`../images/${fileName}.jpg`);
     },
   },
+  methods: {
+    goToRestaurantPage() {
+      this.$router.push({
+        name: "Restaurant",
+        params: { id: this.restaurant.id, kek: this.restaurant },
+        query: { restaurant1: this.restaurant },
+      });
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style>
 .card {
   width: 280px;
   height: 280px;
@@ -64,6 +75,8 @@ export default {
   align-items: center;
   background: rgb(15, 15, 15);
   border-radius: 10px;
+  color: aliceblue;
+  text-decoration: none;
 }
 
 .card:hover {
@@ -86,7 +99,6 @@ export default {
 
 .card__restaurant-workload-indicator {
   width: 18px;
-  height: 18px;
 }
 
 .card__restaurant-closed-status {
