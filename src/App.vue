@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <header class="header">
-      <img src="./images/logo.png" alt="header-logo" />
+      <img class="header__logo" @click="goToMainPage" src="./images/logo.png" alt="header-logo" />
       <router-link class="header__link" to="/">Главная</router-link>
       <router-link class="header__link" to="/about"
         >Список ресторанов</router-link
@@ -122,6 +122,10 @@ export default {
   methods: {
     deleteRestaurant(restaurant){
       this.restaurantList = this.restaurantList.filter(element => element.id !== restaurant.id)
+    },
+
+    goToMainPage(){
+      this.$router.push('/')
     }
   }
 };
@@ -145,6 +149,10 @@ body {
   background: rgb(14, 14, 14);
   height: 40px;
   padding: 10px;
+}
+
+.header__logo:hover {
+  cursor: pointer;
 }
 
 .header__link {
