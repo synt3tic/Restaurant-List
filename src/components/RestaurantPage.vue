@@ -29,6 +29,7 @@
     <button class="restaurant-info__change-status-button" @click="changeRestaurantStatus">
       {{ restaurantStatusButton }}
     </button>
+    <button class="restaurant-info__delete-restaurant-button" @click="deleteRestaurant">Удалить ресторан</button>
   </div>
 </template>
 
@@ -87,6 +88,11 @@ export default {
     changeRestaurantStatus() {
       this.restaurant.status = !this.restaurant.status;
     },
+
+    deleteRestaurant() {
+      this.$router.push('/about')
+      this.$emit('deleteRestaurant', this.restaurant)
+    }
   },
 };
 </script>
@@ -116,7 +122,7 @@ export default {
 }
 
 .restaurant-info__image {
-  width: 800px;
+  width: 700px;
 }
 
 .restaurant-info__change-number-guests-button {
@@ -146,5 +152,21 @@ export default {
   cursor: pointer;
   color: aliceblue;
   background: rgb(14, 14, 14);
+}
+
+.restaurant-info__delete-restaurant-button {
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 140px;
+  height: 30px;
+  background: rgb(112, 53, 53);
+  color: aliceblue;
+}
+
+.restaurant-info__delete-restaurant-button:hover {
+  cursor: pointer;
+  color: rgb(14, 14, 14);
+  background: rgb(148, 52, 52);
 }
 </style>
