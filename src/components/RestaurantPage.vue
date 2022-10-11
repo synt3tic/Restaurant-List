@@ -1,45 +1,32 @@
 <template>
   <div class="restaurant-info">
-    <router-link class="restaurant-info__back-button" to="/about"
-      >⇐ К списку ресторанов</router-link
-    >
+    <router-link class="restaurant-info__back-button" to="/about">⇐ К списку ресторанов</router-link>
     <h2 class="restaurant-info__name">{{ restaurant.name }}</h2>
-    <img
-      class="restaurant-info__image"
-      :src="restaurantLink"
-      alt="restaurant-image"
-    />
+    <img class="restaurant-info__image" :src="restaurantLink" alt="restaurant-image" />
     <p class="restaurant-info__description">{{ restaurant.description }}</p>
     <div class="card__restaurant-workload">
       <p class="card__restaurant-workload">
         <strong>Загруженность:</strong> {{ restaurant.busyPlaces }}/{{
-          restaurant.totalPlaces
+        restaurant.totalPlaces
         }}
       </p>
-      <img
-        class="card__restaurant-workload-indicator"
-        :src="workloadLevelIdicate"
-        alt="restaurant-workload"
-      />
-      <button
-        @click="removeGuest"
-        class="restaurant-info__change-number-guests-button"
-      >
+      <img class="card__restaurant-workload-indicator" :src="workloadLevelIdicate" alt="restaurant-workload" />
+      <button v-if="this.restaurant.busyPlaces > 0" @click="removeGuest"
+        class="restaurant-info__change-number-guests-button">
         -
       </button>
-      <button
-        @click="addGuest"
-        class="restaurant-info__change-number-guests-button"
-      >
+      <button v-if="this.restaurant.totalPlaces > this.restaurant.busyPlaces" @click="addGuest"
+        class="restaurant-info__change-number-guests-button">
         +
       </button>
     </div>
+    <div v-if="this.restaurant.totalPlaces === this.restaurant.busyPlaces">
+      Максимальное кол-во гостей
+    </div>
+    <div v-if="this.restaurant.busyPlaces === 0">Увы, ресторан пуст ☹</div>
     <div v-if="this.restaurant.status">Открыт</div>
     <div class="card__restaurant-closed-status" v-else>Закрыт</div>
-    <button
-      class="restaurant-info__change-status-button"
-      @click="changeRestaurantStatus"
-    >
+    <button class="restaurant-info__change-status-button" @click="changeRestaurantStatus">
       {{ restaurantStatusButton }}
     </button>
   </div>
@@ -66,11 +53,7 @@ export default {
   },
   computed: {
     restaurantStatusButton() {
-      if (this.restaurant.status) {
-        return "Закрыть ресторан";
-      } else {
-        return "Открыть ресторан";
-      }
+      return this.restaurant.status ? "Закрыть ресторан" : "Открыть ресторан";
     },
 
     workloadLevel() {
@@ -80,12 +63,10 @@ export default {
     workloadLevelIdicate() {
       if (this.workloadLevel < 55) {
         return require("../images/restaurant__loading_normal.png");
-      }
-      if (this.workloadLevel > 55 && this.workloadLevel < 75) {
-        return require("../images/restaurant__loading_middle.png");
-      }
-      if (this.workloadLevel >= 75) {
-        return require("../images/restaurant__loading_high.png");
+      } else {
+        return this.workloadLevel >= 75
+          ? require("../images/restaurant__loading_high.png")
+          : require("../images/restaurant__loading_middle.png");
       }
     },
   },

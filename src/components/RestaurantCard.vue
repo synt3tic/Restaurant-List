@@ -40,12 +40,10 @@ export default {
     workloadLevelIdicate() {
       if (this.workloadLevel < 55) {
         return require("../images/restaurant__loading_normal.png");
-      }
-      if (this.workloadLevel > 55 && this.workloadLevel < 75) {
-        return require("../images/restaurant__loading_middle.png");
-      }
-      if (this.workloadLevel >= 75) {
-        return require("../images/restaurant__loading_high.png");
+      } else {
+        return this.workloadLevel >= 75
+          ? require("../images/restaurant__loading_high.png")
+          : require("../images/restaurant__loading_middle.png");
       }
     },
 
