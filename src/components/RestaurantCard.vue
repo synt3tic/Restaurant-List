@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div @click="goToRestaurantPage" class="card">
     <h3>{{ restaurant.name }}</h3>
     <img class="card__image" :src="restaurantLink" alt="restaurant" />
     <div class="card__restaurant-workload">
@@ -14,16 +14,16 @@
         alt="restaurant-workload"
       />
     </div>
-    <div v-if="this.restaurant.status">Открыт</div>
-    <div class="card__restaurant-closed-status" v-else>Закрыт</div>
+    <div :class="{ 'card__restaurant-closed-status': !this.restaurant.status }">
+      {{ restaurantStatus }}
+    </div>
   </div>
 </template>
 
 <script>
+import RestaurantPage from "./RestaurantPage.vue";
 export default {
-  data() {
-    return {};
-  },
+  components: { RestaurantPage },
   props: {
     restaurant: {
       type: Object,
@@ -36,26 +36,38 @@ export default {
     },
 
     workloadLevelIdicate() {
-      if (this.workloadLevel < 55) {
-        return require("../images/restaurant__loading_normal.png");
+      let workloadLevelIdicateLink;
+      if (this.workloadLevel <= 55) {
+        workloadLevelIdicateLink = require("../images/restaurant__loading_normal.png");
+      } else if (this.workloadLevel >= 75) {
+        workloadLevelIdicateLink = require("../images/restaurant__loading_high.png");
+      } else if (this.workloadLevel > 55 && this.workloadLevel < 75) {
+        workloadLevelIdicateLink = require("../images/restaurant__loading_middle.png");
       }
-      if (this.workloadLevel > 55 && this.workloadLevel < 75) {
-        return require("../images/restaurant__loading_middle.png");
-      }
-      if (this.workloadLevel >= 75) {
-        return require("../images/restaurant__loading_high.png");
-      }
+      return workloadLevelIdicateLink;
     },
 
     restaurantLink() {
       const fileName = this.restaurant.imageSource;
       return require(`../images/${fileName}.jpg`);
     },
+
+    restaurantStatus() {
+      return this.restaurant.status ? "Открыт" : "Закрыт";
+    },
+  },
+  methods: {
+    goToRestaurantPage() {
+      this.$router.push({
+        name: "Restaurant",
+        params: { id: this.restaurant.id },
+      });
+    },
   },
 };
 </script>
 
-<style scoped>
+<style>
 .card {
   width: 280px;
   height: 280px;
@@ -64,6 +76,8 @@ export default {
   align-items: center;
   background: rgb(15, 15, 15);
   border-radius: 10px;
+  color: aliceblue;
+  text-decoration: none;
 }
 
 .card:hover {
@@ -86,7 +100,6 @@ export default {
 
 .card__restaurant-workload-indicator {
   width: 18px;
-  height: 18px;
 }
 
 .card__restaurant-closed-status {

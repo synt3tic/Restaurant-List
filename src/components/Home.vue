@@ -70,7 +70,6 @@ export default {
 .main-page {
   display: flex;
   flex-direction: column;
-  width: 100%;
   align-items: center;
 }
 
@@ -104,6 +103,6 @@ export default {
 
 .page__restaurant-logo {
   margin-top: 25px;
-  width: 40%;
+  width: 500px;
 }
 </style>
