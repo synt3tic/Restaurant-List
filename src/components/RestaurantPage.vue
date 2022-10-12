@@ -85,11 +85,9 @@ export default {
       let workloadLevelIdicateLink;
       if (this.workloadLevel <= 55) {
         workloadLevelIdicateLink = require("../images/restaurant__loading_normal.png");
-      }
-      if (this.workloadLevel >= 75) {
+      } else if (this.workloadLevel >= 75) {
         workloadLevelIdicateLink = require("../images/restaurant__loading_high.png");
-      }
-      if (this.workloadLevel > 55 && this.workloadLevel < 75) {
+      } else if (this.workloadLevel > 55 && this.workloadLevel < 75) {
         workloadLevelIdicateLink = require("../images/restaurant__loading_middle.png");
       }
       return workloadLevelIdicateLink;
