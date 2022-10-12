@@ -1,13 +1,21 @@
 <template>
   <div class="page">
     <header class="header">
-      <img class="header__logo" @click="goToMainPage" src="./images/logo.png" alt="header-logo" />
+      <img
+        class="header__logo"
+        @click="goToMainPage"
+        src="./images/logo.png"
+        alt="header-logo"
+      />
       <router-link class="header__link" to="/">Главная</router-link>
       <router-link class="header__link" to="/about"
         >Список ресторанов</router-link
       >
     </header>
-    <router-view :restaurantList="restaurantList" @deleteRestaurant='deleteRestaurant'/>
+    <router-view
+      :restaurantList="restaurantList"
+      @deleteRestaurant="deleteRestaurant"
+    />
   </div>
 </template>
 
@@ -120,27 +128,29 @@ export default {
     };
   },
   methods: {
-    deleteRestaurant(restaurant){
-      this.restaurantList = this.restaurantList.filter(element => element.id !== restaurant.id)
+    deleteRestaurant(restaurant) {
+      this.restaurantList = this.restaurantList.filter(
+        (element) => element.id !== restaurant.id
+      );
     },
 
-    goToMainPage(){
-      this.$router.push('/')
-    }
-  }
+    goToMainPage() {
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
 <style>
 body {
   margin: 0;
+  background: rgb(36, 36, 36);
 }
 
 .page {
-  height: 100vh;
-  background: rgb(36, 36, 36);
   font-family: "Courier New", Courier, monospace;
   font-weight: 100;
+  padding-bottom: 30px;
 }
 
 .header {

@@ -1,35 +1,55 @@
 <template>
   <div class="restaurant-info">
-    <router-link class="restaurant-info__back-button" to="/about">⇐ К списку ресторанов</router-link>
+    <router-link class="restaurant-info__back-button" to="/about"
+      >⇐ К списку ресторанов</router-link
+    >
     <h2 class="restaurant-info__name">{{ restaurant.name }}</h2>
-    <img class="restaurant-info__image" :src="restaurantLink" alt="restaurant-image" />
+    <img
+      class="restaurant-info__image"
+      :src="restaurantLink"
+      alt="restaurant-image"
+    />
     <p class="restaurant-info__description">{{ restaurant.description }}</p>
     <div class="card__restaurant-workload">
       <p class="card__restaurant-workload">
         <strong>Загруженность:</strong> {{ restaurant.busyPlaces }}/{{
-        restaurant.totalPlaces
+          restaurant.totalPlaces
         }}
       </p>
-      <img class="card__restaurant-workload-indicator" :src="workloadLevelIdicate" alt="restaurant-workload" />
-      <button v-if="this.restaurant.busyPlaces > 0" @click="removeGuest"
-        class="restaurant-info__change-number-guests-button">
+      <img
+        class="card__restaurant-workload-indicator"
+        :src="workloadLevelIdicate"
+        alt="restaurant-workload"
+      />
+      <button
+        @click="removeGuest"
+        class="restaurant-info__change-number-guests-button"
+      >
         -
       </button>
-      <button v-if="this.restaurant.totalPlaces > this.restaurant.busyPlaces" @click="addGuest"
-        class="restaurant-info__change-number-guests-button">
+      <button
+        @click="addGuest"
+        class="restaurant-info__change-number-guests-button"
+      >
         +
       </button>
     </div>
-    <div v-if="this.restaurant.totalPlaces === this.restaurant.busyPlaces">
-      Максимальное кол-во гостей
+    <div>{{ visitorsStatus }}</div>
+    <div :class="{ 'card__restaurant-closed-status': !this.restaurant.status }">
+      {{ restaurantStatus }}
     </div>
-    <div v-if="this.restaurant.busyPlaces === 0">Увы, ресторан пуст ☹</div>
-    <div v-if="this.restaurant.status">Открыт</div>
-    <div class="card__restaurant-closed-status" v-else>Закрыт</div>
-    <button class="restaurant-info__change-status-button" @click="changeRestaurantStatus">
+    <button
+      class="restaurant-info__change-status-button"
+      @click="changeRestaurantStatus"
+    >
       {{ restaurantStatusButton }}
     </button>
-    <button class="restaurant-info__delete-restaurant-button" @click="deleteRestaurant">Удалить ресторан</button>
+    <button
+      class="restaurant-info__delete-restaurant-button"
+      @click="deleteRestaurant"
+    >
+      Удалить ресторан
+    </button>
   </div>
 </template>
 
@@ -62,13 +82,41 @@ export default {
     },
 
     workloadLevelIdicate() {
-      if (this.workloadLevel < 55) {
-        return require("../images/restaurant__loading_normal.png");
-      } else {
-        return this.workloadLevel >= 75
-          ? require("../images/restaurant__loading_high.png")
-          : require("../images/restaurant__loading_middle.png");
+      let workloadLevelIdicateLink;
+      if (this.workloadLevel <= 55) {
+        workloadLevelIdicateLink = require("../images/restaurant__loading_normal.png");
       }
+      if (this.workloadLevel >= 75) {
+        workloadLevelIdicateLink = require("../images/restaurant__loading_high.png");
+      }
+      if (this.workloadLevel > 55 && this.workloadLevel < 75) {
+        workloadLevelIdicateLink = require("../images/restaurant__loading_middle.png");
+      }
+      return workloadLevelIdicateLink;
+    },
+
+    restaurantStatus() {
+      return this.restaurant.status ? "Открыт" : "Закрыт";
+    },
+
+    visitorsStatus() {
+      let status;
+      if (this.restaurant.totalPlaces === this.restaurant.busyPlaces) {
+        status = "Максимальное кол-во гостей";
+      }
+      if (this.restaurant.busyPlaces === 0) {
+        status = "Ресторан пуст, будьте первыми";
+      }
+      if (this.workloadLevel <= 55 && this.workloadLevel > 0) {
+        status = "В ресторане низкая загруженность";
+      }
+      if (this.workloadLevel >= 75 && this.workloadLevel < 100) {
+        status = "В ресторане высокая загруженность";
+      }
+      if (this.workloadLevel > 55 && this.workloadLevel < 75) {
+        status = "В ресторане средняя загруженность";
+      }
+      return status;
     },
   },
 
@@ -90,9 +138,9 @@ export default {
     },
 
     deleteRestaurant() {
-      this.$emit('deleteRestaurant', this.restaurant)
-      this.$router.push('/about')
-    }
+      this.$emit("deleteRestaurant", this.restaurant);
+      this.$router.push("/about");
+    },
   },
 };
 </script>
@@ -103,7 +151,7 @@ export default {
   flex-direction: column;
   align-items: center;
   color: aliceblue;
-  margin: 10px;
+  margin: 30px;
   gap: 10px;
 }
 
@@ -122,7 +170,11 @@ export default {
 }
 
 .restaurant-info__image {
-  width: 700px;
+  width: 80%;
+}
+
+.restaurant-info__description {
+  font-size: 20px;
 }
 
 .restaurant-info__change-number-guests-button {

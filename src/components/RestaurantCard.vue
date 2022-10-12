@@ -1,5 +1,5 @@
 <template>
-  <div @click="goToRestaurantPage" class="card" to="/about/:id">
+  <div @click="goToRestaurantPage" class="card">
     <h3>{{ restaurant.name }}</h3>
     <img class="card__image" :src="restaurantLink" alt="restaurant" />
     <div class="card__restaurant-workload">
@@ -14,8 +14,9 @@
         alt="restaurant-workload"
       />
     </div>
-    <div v-if="this.restaurant.status">Открыт</div>
-    <div class="card__restaurant-closed-status" v-else>Закрыт</div>
+    <div :class="{ 'card__restaurant-closed-status': !this.restaurant.status }">
+      {{ restaurantStatus }}
+    </div>
   </div>
 </template>
 
@@ -23,9 +24,6 @@
 import RestaurantPage from "./RestaurantPage.vue";
 export default {
   components: { RestaurantPage },
-  data() {
-    return {};
-  },
   props: {
     restaurant: {
       type: Object,
@@ -38,26 +36,33 @@ export default {
     },
 
     workloadLevelIdicate() {
-      if (this.workloadLevel < 55) {
-        return require("../images/restaurant__loading_normal.png");
-      } else {
-        return this.workloadLevel >= 75
-          ? require("../images/restaurant__loading_high.png")
-          : require("../images/restaurant__loading_middle.png");
+      let workloadLevelIdicateLink;
+      if (this.workloadLevel <= 55) {
+        workloadLevelIdicateLink = require("../images/restaurant__loading_normal.png");
       }
+      if (this.workloadLevel >= 75) {
+        workloadLevelIdicateLink = require("../images/restaurant__loading_high.png");
+      }
+      if (this.workloadLevel > 55 && this.workloadLevel < 75) {
+        workloadLevelIdicateLink = require("../images/restaurant__loading_middle.png");
+      }
+      return workloadLevelIdicateLink;
     },
 
     restaurantLink() {
       const fileName = this.restaurant.imageSource;
       return require(`../images/${fileName}.jpg`);
     },
+
+    restaurantStatus() {
+      return this.restaurant.status ? "Открыт" : "Закрыт";
+    },
   },
   methods: {
     goToRestaurantPage() {
       this.$router.push({
         name: "Restaurant",
-        params: { id: this.restaurant.id, kek: this.restaurant },
-        query: { restaurant1: this.restaurant },
+        params: { id: this.restaurant.id },
       });
     },
   },
