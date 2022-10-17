@@ -6,7 +6,7 @@
     <h2 class="restaurant-info__name">{{ restaurant.name }}</h2>
     <img
       class="restaurant-info__image"
-      :src="restaurantLink"
+      :src="restaurant.imageSource"
       alt="restaurant-image"
     />
     <p class="restaurant-info__description">{{ restaurant.description }}</p>
@@ -70,7 +70,6 @@ export default {
     this.restaurant = this.restaurantList.find(
       (el) => el.id === +this.$route.params.id
     );
-    this.restaurantLink = require(`../images/${this.restaurant.imageSource}.jpg`);
   },
   computed: {
     restaurantStatusButton() {
@@ -120,19 +119,22 @@ export default {
 
   methods: {
     addGuest() {
-      if (this.restaurant.totalPlaces > this.restaurant.busyPlaces) {
-        this.restaurant.busyPlaces += 1;
+      if (
+        this.restaurant.totalPlaces > this.restaurant.busyPlaces &&
+        this.restaurant.status
+      ) {
+        this.$emit("addGuest", this.restaurant);
       }
     },
 
     removeGuest() {
       if (this.restaurant.busyPlaces > 0) {
-        this.restaurant.busyPlaces -= 1;
+        this.$emit("removeGuest", this.restaurant);
       }
     },
 
     changeRestaurantStatus() {
-      this.restaurant.status = !this.restaurant.status;
+      this.$emit("changeRestaurantStatus", this.restaurant);
     },
 
     deleteRestaurant() {
@@ -168,7 +170,7 @@ export default {
 }
 
 .restaurant-info__image {
-  width: 80%;
+  width: 900px;
 }
 
 .restaurant-info__description {
@@ -218,5 +220,23 @@ export default {
   cursor: pointer;
   color: rgb(14, 14, 14);
   background: rgb(148, 52, 52);
+}
+
+@media (max-width: 980px) {
+  .restaurant-info__image {
+    width: 700px;
+  }
+}
+
+@media (max-width: 760px) {
+  .restaurant-info__image {
+    width: 500px;
+  }
+}
+
+@media (max-width: 560px) {
+  .restaurant-info__image {
+    width: 300px;
+  }
 }
 </style>
