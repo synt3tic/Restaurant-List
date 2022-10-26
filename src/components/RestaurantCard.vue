@@ -1,7 +1,7 @@
 <template>
   <div @click="goToRestaurantPage" class="card">
-    <h3>{{ restaurant.name }}</h3>
-    <img class="card__image" :src="restaurantLink" alt="restaurant" />
+    <h3 class="card__header">{{ restaurant.name }}</h3>
+    <img class="card__image" :src="restaurant.imageSource" alt="restaurant" />
     <div class="card__restaurant-workload">
       <p class="card__restaurant-workload">
         <strong>Загруженность:</strong> {{ restaurant.busyPlaces }}/{{
@@ -47,11 +47,6 @@ export default {
       return workloadLevelIdicateLink;
     },
 
-    restaurantLink() {
-      const fileName = this.restaurant.imageSource;
-      return require(`../images/${fileName}.jpg`);
-    },
-
     restaurantStatus() {
       return this.restaurant.status ? "Открыт" : "Закрыт";
     },
@@ -74,15 +69,20 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 15px;
   background: rgb(15, 15, 15);
   border-radius: 10px;
-  color: aliceblue;
-  text-decoration: none;
 }
 
 .card:hover {
   cursor: pointer;
   background: rgb(25, 25, 25);
+}
+
+.card__header {
+  margin: 0;
 }
 
 .card__image {
@@ -93,9 +93,8 @@ export default {
 .card__restaurant-workload {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  gap: 5px;
+  margin: 0;
+  gap: 10px;
 }
 
 .card__restaurant-workload-indicator {
@@ -104,5 +103,18 @@ export default {
 
 .card__restaurant-closed-status {
   color: rgb(219, 53, 53);
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 220px;
+    height: 220px;
+    font-size: 14px;
+  }
+
+  .card__image {
+    width: 180px;
+    height: 110px;
+  }
 }
 </style>

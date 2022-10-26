@@ -103,6 +103,48 @@ export default {
 
 .page__restaurant-logo {
   margin-top: 25px;
-  width: 500px;
+  width: 460px;
+}
+
+@media (max-width: 480px) {
+  .main__text-header {
+    font-size: 20px;
+  }
+
+  .main__lamp {
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+  }
+
+  .main__text-description {
+    font-size: 16px;
+  }
+
+  .page__restaurant-logo {
+    margin-top: 15px;
+    width: 340px;
+  }
+}
+
+@media (max-width: 360px) {
+  .main__text-header {
+    font-size: 16px;
+  }
+
+  .main__lamp {
+    width: 50px;
+    height: 50px;
+    margin-top: 20px;
+  }
+
+  .main__text-description {
+    font-size: 12px;
+  }
+
+  .page__restaurant-logo {
+    margin-top: 15px;
+    width: 240px;
+  }
 }
 </style>
