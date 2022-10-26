@@ -24,12 +24,14 @@
       <button
         @click="removeGuest"
         class="restaurant-info__change-number-guests-button"
+        :disabled="removeButtonStatus"
       >
         -
       </button>
       <button
         @click="addGuest"
         class="restaurant-info__change-number-guests-button"
+        :disabled="addButtonStatus"
       >
         +
       </button>
@@ -115,6 +117,14 @@ export default {
       }
       return status;
     },
+
+    removeButtonStatus() {
+      return !this.restaurant.busyPlaces;
+    },
+
+    addButtonStatus() {
+      return this.restaurant.busyPlaces === this.restaurant.totalPlaces;
+    },
   },
 
   methods: {
@@ -190,6 +200,11 @@ export default {
   cursor: pointer;
   color: aliceblue;
   background: rgb(14, 14, 14);
+}
+
+.restaurant-info__change-number-guests-button:disabled {
+  background: gray;
+  color: aliceblue;
 }
 
 .restaurant-info__change-status-button {
